@@ -1,0 +1,11 @@
+{
+  "user_id": "0",
+  "hash": "0",
+  "mobile_client_version": "471",
+  "network_id": "11",
+  "override_play_server_url": "https://ps7.idlechampions.com/~idledragons/post.php",
+  "use_override_play_server_url": false,
+  "LOG": true,
+  "DEBUG": true,
+  "SAVE_OUTPUT": true
+}
