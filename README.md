@@ -1,11 +1,23 @@
 # dragonslide
 
 ## requirements:
+
 bash
-coreutils
-md5sum
+coreutils (head,base64,tr,fold,md5sum)
+sed
 curl
 jq
 pigz
 
-tested on centos7 wsl
+## setup
+
+```
+cp config.json.example config.json
+```
+
+## usage
+
+`slide.sh` standalone
+
+`source slide.sh` inside other scripts
+
