@@ -18,18 +18,16 @@ is_set() {
 }
 
 save_output() {
-  [[ ${SAVE_OUTPUT:-false} == "true" ]] && echo "${1}" >> "${output_path}${2}"
+  [[ ${SAVE_OUTPUT:-false} == "true" ]] && echo "${1}" >>"${output_path}${2}"
   log "# saved output: ${output_path}${2}"
 }
 
-log()
-{
-    [[ ${LOG:-false} == "true" ]] && echo "${@}"
+log() {
+  [[ ${LOG:-false} == "true" ]] && echo "${@}"
 }
 
-debug()
-{
-    [[ ${DEBUG:-false} == "true" ]] && echo "# DEBUG:" && echo "${@}"
+debug() {
+  [[ ${DEBUG:-false} == "true" ]] && echo "# DEBUG:" && echo "${@}"
 }
 
 read_config() {
@@ -39,10 +37,10 @@ read_config() {
       exit 1
     fi
     log "- Configuration: ${config_file} (user_id and hash hidden)"
-    jq -r '. | to_entries | .[] | .key + "=" + (.value | @sh)' < ${config_file} | grep -vE '(user_id|hash)'
+    jq -r '. | to_entries | .[] | .key + "=" + (.value | @sh)' <${config_file} | grep -vE '(user_id|hash)'
     log "- eval: ${config_file}..."
-    eval "$(jq -r '. | to_entries | .[] | .key + "=" + (.value | @sh)' < ${config_file})"
-  else 
+    eval "$(jq -r '. | to_entries | .[] | .key + "=" + (.value | @sh)' <${config_file})"
+  else
     log "${config_file} does not exist."
     exit 1
   fi
@@ -60,15 +58,19 @@ find_playserver_url() {
 
   if [ "${use_override_play_server_url:-false}" == "true" ]; then
 
-    is_set override_play_server_url || { log "* use_override_play_server_url set but override_play_server_url not set, exiting"; exit 1; }
+    is_set override_play_server_url || {
+      log "* use_override_play_server_url set but override_play_server_url not set, exiting"
+      exit 1
+    }
     play_server_url="${override_play_server_url}"
     log "- Set play_server_url using override: ${play_server_url}"
   else
     log "+ api:getPlayServerForDefinitions"
-    play_server_json=$(curl --compressed -s \
-      "http://master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&timestamp=0&request_id=0&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&" \
-      -H "Host: master.idlechampions.com" \
-      -H "Host: master.idlechampions.com" "${standard_headers}"
+    play_server_json=$(
+      curl --compressed -s \
+        "http://master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&timestamp=0&request_id=0&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&" \
+        -H "Host: master.idlechampions.com" \
+        -H "Host: master.idlechampions.com" "${standard_headers}"
     )
     save_output "${play_server_json}" "response_getplayserverfordefinitions_${datestamp}.json"
     debug "${play_server_json}"
@@ -91,9 +93,10 @@ api_getuserdetails() {
 
   while [ "${details_found}" -eq 0 ]; do
     log "+ api:getuserdetails [${counter}]"
-    json_getuserdetails=$(curl --compressed -s \
-      "${play_server_url}?call=getuserdetails&language_id=1&user_id=${user_id}&hash=${hash}&instance_key=1&include_free_play_objectives=true&timestamp=1&request_id=0&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&" \
-      -H "Host: ${play_server_host}" "${standard_headers}"
+    json_getuserdetails=$(
+      curl --compressed -s \
+        "${play_server_url}?call=getuserdetails&language_id=1&user_id=${user_id}&hash=${hash}&instance_key=1&include_free_play_objectives=true&timestamp=1&request_id=0&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&" \
+        -H "Host: ${play_server_host}" "${standard_headers}"
     )
     # json_getuserdetails=$(cat logs/response_getuserdetails_20220923-024353.json)
     save_output "${json_getuserdetails}" "response_getuserdetails_${datestamp}-${counter}.json"
