@@ -1,11 +1,25 @@
 {
-  "user_id": "0",
-  "hash": "0",
-  "mobile_client_version": "471",
-  "network_id": "11",
-  "override_play_server_url": "https://ps7.idlechampions.com/~idledragons/post.php",
-  "use_override_play_server_url": false,
-  "LOG": true,
-  "DEBUG": true,
-  "SAVE_OUTPUT": true
+  "default": {
+    "force_play_server": "ps7",
+    "ignore_switch_server_request": true,
+    "LOG": true,
+    "DEBUG": true,
+    "SAVE_OUTPUT": true,
+    "user_id": "0",
+    "hash": "0",
+    "mobile_client_version": "472",
+    "network_id": "11"
+  },
+  "steam": {
+    "user_id": "0",
+    "hash": "0",
+    "mobile_client_version": "472",
+    "network_id": "11"
+  },
+  "egs": {
+    "user_id": "0",
+    "hash": "0",
+    "mobile_client_version": "471",
+    "network_id": "21"
+  }
 }

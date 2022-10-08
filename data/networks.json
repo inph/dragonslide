@@ -1,0 +1,24 @@
+{
+  "networks": {
+    "source": "extracted from dll 2022-09-29 v471",
+    "id": {
+      "1": "facebook",
+      "3": "web",
+      "5": "kongregate",
+      "6": "armorgames",
+      "8": "bigfish",
+      "9": "gamesdotcom",
+      "11": "steam",
+      "12": "kizi",
+      "13": "ios",
+      "14": "android",
+      "15": "miniclip",
+      "16": "ps4",
+      "17": "xbox",
+      "18": "cnegames",
+      "19": "switch",
+      "20": "kartidge",
+      "21": "egs"
+    }
+  }
+}

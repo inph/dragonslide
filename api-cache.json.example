@@ -1,0 +1,26 @@
+{
+  "info": {
+    "about": "This file will be automatically generated. example file is just for reference."
+  },
+  "default": {
+    "timestamp": "1665248793",
+    "datestamp": "Sat, 08 Oct 2022 18:06:33 +0100",
+    "instance_id": "1234567890",
+    "active_game_instance_id": "3",
+    "last_play_server_url": "https://ps7.idlechampions.com/~idledragons/post.php"
+  },
+  "steam": {
+    "timestamp": "1665252773",
+    "datestamp": "Sat Oct  8 19:12:53 BST 2022",
+    "instance_id": "9876543210",
+    "active_game_instance_id": "3",
+    "last_play_server_url": "https://ps12.idlechampions.com/~idledragons/post.php"
+  },
+  "egs": {
+    "timestamp": "1665253590",
+    "datestamp": "Sat Oct  8 19:26:30 BST 2022",
+    "instance_id": "1234509876",
+    "active_game_instance_id": "3",
+    "last_play_server_url": "https://ps6.idlechampions.com/~idledragons/post.php"
+  }
+}

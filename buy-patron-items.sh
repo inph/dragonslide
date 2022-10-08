@@ -1,21 +1,17 @@
 #!/usr/bin/bash
 
-source slide.sh
+source ./slide.sh
+
+find_playserver_url
+find_instance_id
 
 buy_patron_shop_item() {
-  datestamp=$(date "+%Y%m%d-%H%M%S")
-  request_id=$(shuf -i 0-2147483647 -n 1)
-  timestamp=$(shuf -i 1-3000 -n 1)
-
-  json_patron_shop_response=$(curl -s --compressed "${play_server_url}?call=purchasepatronshopitem&language_id=1&\
-user_id=${user_id}&hash=${hash}&\
+  generate_call_parameters
+  api_call "${play_server_url}?call=purchasepatronshopitem&language_id=1&user_id=${user_id}&hash=${hash}&\
 patron_id=${patron_id}&shop_item_id=${shop_item_id}&\
-timestamp=${timestamp}&request_id=${request_id}&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&instance_id=${instance_id}&" \
-    -H "Host: ${play_server_host}" "${standard_headers}")
-
-  save_output "${json_patron_shop_response}" "response_purchasepatronshopitem_${patron_id}_${shop_item_id}_${datestamp}.json"
-  echo "${json_patron_shop_response}" | jq 'select(.success == true) | .results[0]'
-  sleep 0.5
+timestamp=${timestamp}&request_id=${request_id}&network_id=${network_id}&mobile_client_version=${mobile_client_version}&localization_aware=true&instance_id=${instance_id}&"
+  echo "${json_response}" | jq 'select(.success == true) | .results[0]'
+  sleep 0.3
 }
 
 patron1=(8 67)

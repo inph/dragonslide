@@ -10,12 +10,16 @@ if ! jq type "${payload_file}" 1>/dev/null; then
 fi
 
 source slide.sh
+# -p steam
+
+find_playserver_url
+api_getuserdetails
 
 # public const int MaxValue = 2147483647;
 
 # 6EC08F00
 # 32AB3E00
-hashcode=$(head -c512 < /dev/urandom | base64 | tr -dc '0-9A-F' | fold -c6 | head -1 | sed 's/$/00/')
+hashcode=$(head -c512 < /dev/urandom | base64 | tr -dc '0-9A-F' | fold -w6 | head -1 | sed 's/$/00/')
 
 http_boundary="BestHTTP_HTTPMultiPartForm_${hashcode}"
 

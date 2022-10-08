@@ -1,6 +1,7 @@
 .DS_Store
 .env
 config.json
+api-cache.json
 logs/*.json
 cached_defs/*.json
 cached_defs/current.cached_definitions
