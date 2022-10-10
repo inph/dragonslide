@@ -39,12 +39,30 @@ log() {
   [[ ${LOG:-false} == "true" ]] && echo "${@}" || return 0
 }
 
-log_info() {
-  [[ ${VERBOSE:-false} == "true" ]] && echo "${@}" || return 0
+logf() {
+  [[ ${LOG:-false} == "true" ]] && printf "${@}" || return 0
 }
 
 debug() {
   [[ ${DEBUG:-false} == "true" ]] && echo "# DEBUG:" && echo "${@}" || return 0
+}
+
+save_log_vars() {
+  LOG_SAVED="${LOG}"
+  SAVE_OUTPUT_SAVED="${SAVE_OUTPUT}"
+  SAVE_REQUEST_SAVED="${SAVE_REQUEST}"
+}
+
+restore_log_vars() {
+  LOG="${LOG_SAVED}"
+  SAVE_OUTPUT="${SAVE_OUTPUT_SAVED}"
+  SAVE_REQUEST="${SAVE_REQUEST_SAVED}"
+}
+
+disable_log_vars() {
+  LOG="false"
+  SAVE_OUTPUT="false"
+  SAVE_REQUEST="false"
 }
 
 read_config() {
@@ -69,7 +87,7 @@ read_config() {
     json_final_config=$(echo "${config_profile_default}${config_profile_named:-""}" | jq -s 'add')
     #echo "${json_final_config}"
 
-    #log_info "- Config: Configuration parsed: ${config_file} (user_id and hash hidden)"
+    #log "- Config: Configuration parsed: ${config_file} (user_id and hash hidden)"
     #echo "${json_final_config}" | jq -r '. | del(.user_id,.hash) | to_entries | .[] | .key + "=" + (.value | @sh)'    
     eval "$(echo ${json_final_config} | jq -r '. | to_entries | .[] | .key + "=" + (.value | @sh)')"
   else
@@ -406,7 +424,7 @@ ${instance_id}
   echo "${json_response}" | jq
 }
 
-echo "# [slide.sh] ""${@}"
+log "# [slide.sh] ""${@}"
 
 config_profile=""
 die() { echo "$*" >&2; exit 2; }
